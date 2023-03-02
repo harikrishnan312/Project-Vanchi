@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const bcrypt = require('bcrypt');
 
-const secretkey = process.env.secretkey;
+const secretkey = "mysessionkey";
 // const emailUser = process.env.emailUser;
 // const emailPassword = process.env.emailPassword;
 const emailUser = "harikrishnanks9645969312@gmail.com";
