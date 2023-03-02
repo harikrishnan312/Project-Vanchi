@@ -916,7 +916,7 @@ const updateDate = async (req, res) => {
             { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
             { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
         });
-        if (packagecheck && checkinCheck && checkinCheck.is_booked) {
+        if (packageData && checkinCheck && checkinCheck.is_booked) {
 
             res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
 
