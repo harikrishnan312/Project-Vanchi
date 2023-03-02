@@ -8,7 +8,8 @@ config.Db();
 
 const session = require('express-session');
 app.use(session({
-    secret: (config.secretkey),
+    secret:"mysessionkey",
+    //secret: (config.secretkey),
     saveUninitialized: false,
     resave: false
 }));
