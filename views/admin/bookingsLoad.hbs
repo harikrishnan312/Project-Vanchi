@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>bookings</title>
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!-- CSS stylesheet for DataTables with Bootstrap 5.3 styling -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+
+    <!-- jQuery library -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/home">Vanchi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/packages">package list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/category">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/banner">Banner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/bookings">Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/coupons">Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main">
+        <section class="sign-in">
+            <div class="container">
+                <!-- Sing in  Form -->
+                <br><br>
+                <div class="signin-contents">
+                    <div class="signin-image" style="width: 80%; margin-left: 6em;">
+                        <img src="/images/Vanchi logo.jpg" alt="" class="img-fluid"
+                            style="width: 13em; height: 6em; border-radius: 2em; margin:0em">
+         
+                        <a href="/admin/bookingsReport"><button class="form-submit" style="height: 3em; float: right;">Bookings report</button></a>
+                    </div>
+                    <br>
+                    <div class="signin-form">
+                        <h2 class="form-title">Bookings</h2>
+
+                        <table id="table_id">
+                            <thead>
+                                <tr>
+                                    <th>Package</th>
+                                    <th>OrderId</th>
+                                    <th>User Name</th>
+                                    <th>Checkin</th>
+                                    <th>Checkout</th>
+                                    <th>Price</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {{#each bookings}}
+                                <tr>
+                                    <td>{{booking_id.0.package_name}} , {{booking_id.1.package_name}}</td>
+                                    <td>{{order_id}}</td>
+                                    <td>{{booking_id.0.user_name}}</td>
+                                    <td>{{booking_id.0.checkin}} , {{booking_id.1.checkin}}</td>
+                                    <td>{{booking_id.0.checkout}} , {{booking_id.1.checkout}}</td>
+                                    <td>{{total}}</td>
+                                    <td>{{payment_method}}</td>
+                                    {{#if status}}
+                                    <td><a href="/admin/status?id={{_id}}"><button
+                                                class="btn btn-success">Completed</button></a></td>
+                                    {{else}}
+                                    <td><a href="/admin/status?id={{_id}}"><button class="btn btn-warning">Not
+                                                Completed</button></a></td>
+                                    {{/if}}
+
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        {{#if bookings.length}}
+                        {{else}}
+                        <div><img src="/images/cart empty.webp" alt="" class="img-fluid"></div>
+                        {{/if}}
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    </div>
+    <!-- Your script to initialize the DataTable -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+    <!-- DataTables library -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>

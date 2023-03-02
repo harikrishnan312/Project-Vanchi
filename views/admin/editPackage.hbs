@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
+    <title>Edit packege</title>
+</head>
+
+<body>
+
+
+    <div class="main">
+
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Edit package</h2>
+                        <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
+                            <div class="form-group">
+
+                                <input type="text" name="name" id="name" placeholder="Your Name"
+                                    value="{{package.name}}" required />
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" aria-label="Default select example" name="category">
+                                    <option selected>{{package.category}}</option>
+                                    {{#each category}}
+                                    <option >{{this.room}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                            
+                                     <select class="form-select" aria-label="Default select example">
+                                    <option selected>{{package.class}}</option>
+                                    <option>AC</option>
+                                    <option>NON AC</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="price" id="price" placeholder="Enter price"
+                                    value="{{package.price}}" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="description" id="description" placeholder="Enter description"
+                                    value="{{package.description}}" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="image" multiple/>
+                            </div>
+
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" class="form-submit" value="Save" />
+                                <input type="hidden" name="id" value="{{package._id}}">
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img
+                                src="https://thumbs.dreamstime.com/b/houseboat-kerala-backwaters-india-panorama-61550437.jpg"
+                                alt="sing up image"></figure>
+                        <br>
+                        <div class="messagesignup">
+                            <h3>{{message}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> `
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

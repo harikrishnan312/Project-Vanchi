@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Vanchi</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700|Dancing+Script:400,700|Muli:300,400"
+    rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+  <link href="css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  {{!-- css for date --}}
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css_date/classic.css">
+  <link rel="stylesheet" href="css_date/classic.date.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css_date/bootstrap.min.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css_date/style.css">
+  {{!-- end --}}
+
+  <link rel="stylesheet" href="css/style.css">
+
+
+
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+
+    <div class="header-top bg-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-6 col-lg-3 logo">
+            <a href="/home">
+              <img src="images\Vanchi logo.jpg" alt="Image" class="logo img-fluid" style="border-radius: 2em;">
+              <!-- <strong>Water</strong>Boat -->
+            </a>
+          </div>
+          <div class="col-lg-3 d-none d-lg-block">
+
+            <div class="quick-contact-icons d-flex">
+              <div class="icon align-self-start">
+                <span class="icon-location-arrow text-primary"></span>
+              </div>
+              <div class="text">
+                <span class="h4 d-block">Alappuzha</span>
+                <span class="caption-text">Kuttanad</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-lg-3 d-none d-lg-block">
+            <div class="quick-contact-icons d-flex">
+              <div class="icon align-self-start">
+                <span class="icon-phone text-primary"></span>
+              </div>
+              <div class="text">
+                <span class="h4 d-block">9645969312</span>
+                <span class="caption-text">Toll free</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 d-none d-lg-block">
+            <div class="quick-contact-icons d-flex">
+              <div class="icon align-self-start">
+                <span class="icon-envelope text-primary"></span>
+              </div>
+              <div class="text">
+                <span class="h4 d-block">Anugraha@gmail.com</span>
+                <span class="caption-text">Alappuzha</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 d-block d-lg-none text-right">
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
+                class="icon-menu h3">Menu</span></a>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="site-navbar py-2 js-sticky-header site-navbar-target d-none pl-0 d-lg-block" role="banner">
+
+        <div class="container">
+          <div class="d-flex align-items-center">
+
+            <div class="mx-auto">
+              <nav class="site-navigation position-relative text-right" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block">
+                  {{#if userData}}
+                  <li class="active">
+                    <a href="/home" class="nav-link text-left">Home</a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link text-left">About Us</a>
+                  </li>
+                  <li>
+                    <a href="#package" class="nav-link text-left">Packages</a>
+                  </li>
+                  <li>
+                    <a href="/bookings" class="nav-link text-left">Bookings</a>
+                  </li>
+                  <li><a href="/bookingscart" class="nav-link text-left">Bookings cart</a></li>
+                  <li>
+                    <a href="#" class="nav-link text-left">Contact us</a>
+                  </li>
+                  <li>
+                    {{else}}
+                  <li class="active">
+                    <a href="/home" class="nav-link text-left" data-toggle="modal"
+                      data-target="#exampleModalCenter">Home</a>
+                  </li>
+                  <li>
+                    <a href="about.html" class="nav-link text-left" data-toggle="modal"
+                      data-target="#exampleModalCenter">About Us</a>
+                  </li>
+                  <li>
+                    <a href="#package" class="nav-link text-left">packages</a>
+                  </li>
+                  <li>
+                    <a href="/bookings" class="nav-link text-left" data-toggle="modal"
+                      data-target="#exampleModalCenter">Bookings</a>
+                  </li>
+                  <li><a href="/bookingscart" class="nav-link text-left" data-toggle="modal"
+                      data-target="#exampleModalCenter">Bookings cart</a></li>
+                  <li>
+                    <a href="contact.html" class="nav-link text-left" data-toggle="modal"
+                      data-target="#exampleModalCenter">Contact us</a>
+                  </li>
+                  <li>
+                    {{/if}}
+
+                    {{#if userData}}
+                    <a href='/profile' class="nav-link text-left">Profile</a>
+                    {{else}}
+                    <a href='/login' class="nav-link text-left">Log in</a>
+                    {{/if}}
+                  </li>
+                </ul>
+                </ul>
+              </nav>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="hero-slide owl-carousel site-blocks-cover">
+      <div class="intro-section" style="background-image: url('packageImages/{{banner.0.image}}');">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7 ml-auto text-right" data-aos="fade-up">
+              <h1>Explore, The Beauty of backwater</h1>
+              <p></p>
+              <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-section" style="background-image: url('packageImages/{{banner.1.image}}');">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7 mx-auto text-center" data-aos="fade-up">
+              <h1>Enjoy The Beauty With Your Family</h1>
+              <p></p>
+              <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- END slider -->
+
+    <!-- Button trigger modal -->
+    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      Launch demo modal
+    </button> --}}
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">LOG IN</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Log In to continue enjoying full features...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="/login"><button type="button" class="btn btn-primary">LOG IN</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="packageImages/{{banner.4.image}}" alt="Image" class="home-img img-fluid">
+          </div>
+          <div class="col-md-6">
+            <span class="text-serif text-primary">About Us</span>
+            <h3 class="heading-92913 text-black">Welcome To Our Website</h3>
+            <p>A houseboat ride in the Kuttanad backwaters of Kerala, India is an experience like no other.
+              Surrounded by lush greenery and serene waterways, this unique form of accommodation offers a tranquil
+              escape from the hustle and bustle of daily life. The houseboats themselves are traditional Keralan
+              vessels, expertly crafted and fitted with modern amenities to ensure a comfortable stay.</p>
+            <p>Whether you're seeking a romantic getaway, a family vacation, or simply a chance to connect with nature,
+              a houseboat ride in Kuttanad is an unforgettable experience. Don't miss the opportunity to explore the
+              beauty and serenity of this magnificent region!</p>
+            <p><a href="#" class="btn btn-primary py-3 px-4">Learn More</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="site-section bg-image overlay" style="background-image: url('packageImages/{{banner.2.image}}');">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="counter-39392">
+              <h3>10</h3>
+              <span>Number of Boats</span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="counter-39392">
+              <h3>10000+</h3>
+              <span>Customers Satisfied</span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="counter-39392">
+              <h3>100+</h3>
+              <span>Number of Staffs</span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="counter-39392">
+              <h3>50+</h3>
+              <span>Destinations</span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="counter-39392">
+              <h3>20+</h3>
+              <span>Professional Drivers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="content" id="package">
+
+      <div class="container text-left">
+        <div class="row justify-content-center">
+          <div class="col-lg-7">
+
+            <h2 class="mb-5 text-center date">Available packages</h2>
+            <form action="" class="row" method="post">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="input_from">From</label>
+                  <input type="text" class="form-control" id="input_from" name="checkin" placeholder="Checkin" value="{{checkinDate}}" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="input_to">To</label>
+                  <input type="text" class="form-control" id="input_to" name="checkout" placeholder="Checkout" value="{{checkoutDate}}" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-button">
+                  {{#if userData}}
+                  <input type="submit" id="signup" class="form-submit" value="Check available packages" />
+                  {{else}}
+                  <input type="submit" id="signup" class="form-submit" value="Check available packages" disabled />
+                  {{/if}}
+                </div>
+              </div>
+              <div class="messagefail">{{message}}</div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center">
+            <span class="text-serif text-primary">Packages</span>
+            <h3 class="heading-92913 text-black text-center">Our Packages</h3>
+          </div>
+        </div>
+        <div class="package-list">
+          {{#if availablePackage}}
+          {{#if userData}}
+          {{#each availablePackage}}
+          <div class="package-item " style="flex-basis: 30%; margin: 1%;">
+            <a href="/packageview?id={{this._id}}">
+              <div class="card cardpackage">
+                <img class="package-image" src="packageImages/{{this.image.[0]}}" alt="Image">
+                <br>
+                <h3 class="package-name">{{this.name}}</h3>
+                <p class="package-price">Price: {{this.price}} RS/-</p>
+                <p class="package-class">Rooms: {{this.category}}</p>
+                <p class="package-class">Class: {{this.class}}</p>
+
+              </div>
+            </a>
+          </div>
+
+          {{/each}}
+          {{/if}}
+          {{else}}
+          {{#if userData}}
+          {{#each package}}
+          <div class="package-item " style="flex-basis: 30%; margin: 1%;">
+            <a href="/packageview?id={{this._id}}">
+              <div class="card cardpackage">
+                <img class="package-image" src="packageImages/{{this.image.[0]}}" alt="Image">
+                <br>
+                <h3 class="package-name">{{this.name}}</h3>
+                <p class="package-price">Price: {{this.price}} RS/-</p>
+                <p class="package-class">Rooms: {{this.category}}</p>
+                <p class="package-class">Class: {{this.class}}</p>
+
+              </div>
+            </a>
+          </div>
+
+          {{/each}}
+          {{else}}
+          {{#each package}}
+          <div class="package-item " style="flex-basis: 30%; margin: 1%;">
+            <div class="card cardpackage">
+              <a href="/packageview?id={{this._id}}" data-toggle="modal" data-target="#exampleModalCenter"><img
+                  class="package-image" src="packageImages/{{image.[0]}}" alt="Image"></a>
+              <br>
+              <h3 class="package-name">{{this.name}}</h3>
+              <p class="package-price">Price: {{this.price}} RS/-</p>
+              <p class="package-class">Rooms: {{this.category}}</p>
+              <p class="package-class">Class: {{this.class}}</p>
+
+            </div>
+          </div>
+
+          {{/each}}
+          {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center">
+            <span class="text-serif text-primary">Team</span>
+            <h3 class="heading-92913 text-black text-center">Our Team</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-lg-0">
+            <div class="person">
+              <figure>
+                <img src="images/house boat driver.jpg" alt="Image" class="img-fluid team">
+
+              </figure>
+              <div class="person-contents">
+                <h3>Rahul</h3>
+                <span class="position">Caption</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mb-lg-0">
+            <div class="person">
+              <figure>
+                <img src="images/food pic.jpg" alt="Image" class="img-fluid team">
+
+              </figure>
+              <div class="person-contents">
+                <h3>Akhil</h3>
+                <span class="position">Head Chief</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mb-lg-0">
+            <div class="person">
+              <figure>
+                <img src="images/house boat interior.jpg" alt="Image" class="img-fluid team">
+
+              </figure>
+              <div class="person-contents">
+                <h3>Deepak</h3>
+                <span class="position">Head Staff</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mb-lg-0">
+            <div class="person">
+              <figure>
+                <img src="images/food sadya.jpg" alt="Image" class="img-fluid team">
+
+              </figure>
+              <div class="person-contents">
+                <h3>Rajeev</h3>
+                <span class="position">Manager</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center">
+            <span class="text-serif text-primary">Testimonial</span>
+            <h3 class="heading-92913 text-black text-center">What Customer Saying...</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
+            <div class="testimony-39291">
+              <blockquote>
+                <p>"We had the most amazing time on our houseboat! The scenery was breathtaking and the crew was
+                  incredibly friendly and accommodating. We loved every minute of our trip and can't wait to come
+                  back.".</p>
+              </blockquote>
+              <div class="d-flex vcard align-items-center">
+                <div class="pic mr-3">
+                </div>
+                <div class="text">
+                  <strong class="d-block">Akash</strong>
+                  <span>malapuram</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
+            <div class="testimony-39291">
+              <blockquote>
+                <p>"The houseboat was a fantastic way to see the backwaters. The rooms were comfortable and clean, and
+                  the food was delicious. We particularly enjoyed the peace and quiet on the water, it was a welcome
+                  escape from the city."</p>
+              </blockquote>
+              <div class="d-flex vcard align-items-center">
+                <div class="pic mr-3">
+                </div>
+                <div class="text">
+                  <strong class="d-block">Manu</strong>
+                  <span>ernakulam</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
+            <div class="testimony-39291">
+              <blockquote>
+                <p>"We had a wonderful experience on our houseboat! The staff was attentive and the scenery was just
+                  stunning. We highly recommendthis trip to anyone looking for a unique and relaxing experience."</p>
+              </blockquote>
+              <div class="d-flex vcard align-items-center">
+                <div class="pic mr-3">
+                </div>
+                <div class="text">
+                  <strong class="d-block">Avanthika</strong>
+                  <span>palakad</span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section bg-image overlay" style="background-image: url('packageImages/{{banner.3.image}}');">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="text-white">Get In Touch With Us</h2>
+            <p class="mb-0"><a href="#" class="btn btn-warning py-3 px-5 text-white">Contact Us</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <p class="mb-4"><img src="images\Vanchi logo.jpg" alt="Image" class="img-fluid" style="border-radius: 2em;">
+            </p>
+            <p></p>
+            <p><a href="#">Learn More</a></p>
+          </div>
+          <div class="col-lg-3">
+            <h3 class="footer-heading"><span>Our Company</span></h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About</a></li>
+              <li><a href="#">News</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Projects</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <h3 class="footer-heading"><span>Our Services</span></h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Industrial</a></li>
+              <li><a href="#">Construction</a></li>
+              <li><a href="#">Remodeling</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <h3 class="footer-heading"><span>Contact</span></h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Support Community</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Our Partners</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="copyright">
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- .site-wrap -->
+
+
+  <!-- loader -->
+  <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#ff5e15" />
+    </svg></div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/jquery.mb.YTPlayer.min.js"></script>
+
+
+
+
+  <script src="js/main.js"></script>
+
+  <script src="js_date/jquery-3.3.1.min.js"></script>
+  <script src="js_date/popper.min.js"></script>
+  <script src="js_date/bootstrap.min.js"></script>
+  <script src="js_date/picker.js"></script>
+  <script src="js_date/picker.date.js"></script>
+
+  <script src="js_date/main.js"></script>
+
+</body>
+
+</html>

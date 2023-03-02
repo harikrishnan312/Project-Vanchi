@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>bookings</title>
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+ 
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/home">Vanchi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/packages">package list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/category">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/banner">Banner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/bookings">Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/coupons">Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main">
+        <section class="sign-in">
+            <div class="container">
+                <!-- Sing in  Form -->
+                <br><br>
+                <div class="signin-contents">
+                    <div class="signin-image" style="width: 80%;">
+                        <img src="/images/Vanchi logo.jpg" alt="" class="img-fluid"
+                            style="width: 17em; height: 10em; border-radius: 2em;">
+
+                        <button class="form-submit" style="height: 3em; float: right;" id="download">Download
+                            report</button>
+                    </div>
+                    <div id="report" class="signin-form" style="width: 100%; padding: 5em; margin: 0;">
+                        <h2 class="form-title">Bookings Report</h2>
+
+                        <table id="table_id">
+                            <thead>
+                                <tr>
+                                    <th>Package</th>
+                                    <th>OrderId</th>
+                                    <th>User Name</th>
+                                    <th>Checkin</th>
+                                    <th>Checkout</th>
+                                    <th>Price</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {{#each bookings}}
+                                <tr>
+                                    <td>{{booking_id.0.package_name}} , {{booking_id.1.package_name}}</td>
+                                    <td>{{order_id}}</td>
+                                    <td>{{booking_id.0.user_name}}</td>
+                                    <td>{{booking_id.0.checkin}} , {{booking_id.1.checkin}}</td>
+                                    <td>{{booking_id.0.checkout}} , {{booking_id.1.checkout}}</td>
+                                    <td>{{total}}</td>
+                                    <td>{{payment_method}}</td>
+                                    <td>Completed</td>
+
+
+
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        {{#if bookings.length}}
+                        {{else}}
+                        <div><img src="/images/cart empty.webp" alt="" class="img-fluid"></div>
+                        {{/if}}
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    </div>
+    <script>
+        window.onload = function () {
+            document.getElementById("download")
+                .addEventListener("click", () => {
+                    const report = this.document.getElementById("report");
+                    console.log(report);
+                    console.log(window);
+                    var opt = {
+                        margin: 1,
+                        filename: 'Bookingreport.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale:  },
+                        jsPDF: { orientation: 'lanscape', unit: 'in', format: [8, 10], }
+                    };
+                    html2pdf().from(report).set(opt).save();
+                }
+    </script>
+
+    <!-- Your script to initialize the DataTable -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script>
+            window.onload = function () {
+                document.getElementById("download")
+                    .addEventListener("click", () => {
+                        const report = this.document.getElementById("report");
+                        console.log(report);
+                        console.log(window);
+                        var opt = {
+                            margin: 1,
+                            filename: 'Bookingreport.pdf',
+                            image: { type: 'jpeg', quality: 0.98 },
+                            html2canvas: { scale: 2 },
+                            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+                        };
+                        html2pdf().from(report).set(opt).save();
+                    })
+            }
+    </script>
+
+
+
+</body>
+
+</html>

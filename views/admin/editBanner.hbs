@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>edit banner</title>
+  <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
+
+</head>
+
+<body>
+ <div class="main">
+
+
+  <!-- Sing in  Form -->
+  <section class="sign-in">
+    <div class="container">
+      <div class="signin-content">
+        <div class="signin-image">
+          <figure><img src="https://thumbs.dreamstime.com/b/houseboat-kerala-backwaters-india-panorama-61550437.jpg"
+              alt="sing up image"></figure>
+          <br>
+          
+
+        </div>
+
+        <div class="signin-form">
+          <h2 class="form-title">Edit Banner</h2>
+          <form action="" method="POST" class="register-form" id="login-form" enctype="multipart/form-data">
+           
+            <div class="form-group">
+              <label for="room"><i class="zmdi zmdi-lock"></i></label>
+              <input type="text" name="name" value="{{banner.name}}" required>
+              <input type="hidden" name="id" value="{{banner._id}}">
+            </div>
+            <div>
+                <input type="file" name="image" required>
+            </div>
+
+            <div class="form-group form-button">
+              <input type="submit" class="form-submit" value="Save" />
+            </div>
+
+            <div class="messagelogin"> <h4>{{message}} </h4></div>
+          </form>
+         
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+</body>
+
+</html>

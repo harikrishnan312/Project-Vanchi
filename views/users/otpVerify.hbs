@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>otp verification</title>
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
+
+</head>
+
+<body>
+    <div class="main">
+        
+
+   
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                       <img src="/images/Vanchi logo.jpg" alt="">
+                        <a href="/" class="signup-image-link">Back to Login page</a>
+                        <br>
+                        <a href="/resend" class="signup-image-link">Resent otp</a>
+
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">OTP verification</h2>
+                        <form action="" method="POST">
+                            <div class="form-group">
+                                <label for="your_otp"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="otp" id="otp" placeholder="OTP" /required>
+                                
+                            </div>
+
+                            <div class="form-group form-button">
+                                <input type="submit" class="form-submit" value="Verify" />
+                            </div>
+
+                          
+                             <div class="messageforget"><h3>{{message}}</h3></div>
+                        </form>
+                        {{!-- <div class="social-login">
+                            <span class="social-label">Or login with</span>
+                            <ul class="socials">
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li> --}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>
