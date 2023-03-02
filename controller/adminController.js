@@ -133,7 +133,7 @@ const logout = async (req, res) => {
 }
 const signupPage = async (req, res) => {
     try {
-        res.render('signup');
+        res.render('signUp');
     } catch (error) {
         console.log(error.message);
     }
@@ -168,16 +168,16 @@ const insertAdmin = async (req, res) => {
                     res.redirect('/login/admin');
                 }
                 else {
-                    res.render('signup', { message: "Your registration has been failed" });
+                    res.render('signUp', { message: "Your registration has been failed" });
                 }
             }
             else {
-                res.render('signup', {
+                res.render('signUp', {
                     message: "Admin already exist"
                 })
             }
         } else {
-            res.render('signup', { message: "passwords not match" })
+            res.render('signUp', { message: "passwords not match" })
         }
     }
 
