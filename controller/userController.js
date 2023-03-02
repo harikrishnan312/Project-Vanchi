@@ -908,18 +908,26 @@ const updateDate = async (req, res) => {
 
         const id = req.query.id;
         const userData = await User.findOne({ _id: req.session.user_id })
-        const packagecheck = await Dates.findOne()
-        const datedata = await Dates.findOne();
+        // const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
         const packageData = await Package.findOne({ _id: id });
+        console.log(packageData);
         const checkinCheck = await Dates.findOne({
-            $or: [{ checkin: req.body.checkin }, { $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
-            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
-            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
+            $and: [{ package_id: req.body.packageid },
+            {
+                $or: [{ checkin: req.body.checkin }, { $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
+                { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
+                { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
+            }]
         });
-        if (packageData && checkinCheck && checkinCheck.is_booked) {
+        if (checkinCheck && checkinCheck.is_booked) {
 
             res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-
+            
+            await Dates.updateOne({ _id: req.query.dateid }, {
+                $set: {
+                    is_booked: true
+                }
+            })
         } else {
 
             const date = await Dates.updateOne({ _id: req.query.dateid }, {
