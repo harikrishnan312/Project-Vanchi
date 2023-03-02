@@ -583,7 +583,7 @@ const packageload = async (req, res) => {
         const id = req.query.id
         const packageData = await Package.findOne({ _id: id })
 
-        res.render('packageview', { package: packageData });
+        res.render('packageView', { package: packageData });
     } catch (error) {
         console.log(error.message)
     }
@@ -607,17 +607,17 @@ const checkinCheck = async (req, res) => {
         });
 
         if (bookingDate.length === 2) {
-            res.render('packageview', { message: "Booking Cart is full ", package: packageData })
+            res.render('packageView', { message: "Booking Cart is full ", package: packageData })
         } else {
             if (packagecheck) {
 
                 if (datedata) {
 
-                    res.render('packageview', { message: "Sorry Someone already taken your date ", package: packageData })
+                    res.render('packageView', { message: "Sorry Someone already taken your date ", package: packageData })
                 }
                 else {
                     if (checkinCheck) {
-                        res.render('packageview', { message: "Sorry Someone already taken your date ", package: packageData })
+                        res.render('packageView', { message: "Sorry Someone already taken your date ", package: packageData })
 
                     } else {
 
@@ -708,7 +708,7 @@ const checkinCheck = async (req, res) => {
 
                     const bookingData = await booking.save();
 
-                    res.redirect('/bookingscart');
+                    res.redirect('/bookingsCart');
                 }
                 else {
                     console.log(error.message);
@@ -762,7 +762,7 @@ const bookingsCart = async (req, res) => {
         }
 
 
-        res.render('bookingscart', { bookingData, subtotal })
+        res.render('bookingsCart', { bookingData, subtotal })
     } catch (error) {
         console.log(error.message);
     }
@@ -872,7 +872,7 @@ const deleteBooking = async (req, res) => {
         const deletebooking = await Booking.deleteOne({ _id: id });
         const deletedate1 = await Dates.deleteOne({ _id: date_id });
 
-        res.redirect('/bookingscart')
+        res.redirect('/bookingsCart')
 
 
     } catch (error) {
