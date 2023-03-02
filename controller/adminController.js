@@ -165,7 +165,7 @@ const insertAdmin = async (req, res) => {
 
                 if (adminData) {
 
-                    res.redirect('/login/admin');
+                    res.redirect('/admin/login');
                 }
                 else {
                     res.render('signUp', { message: "Your registration has been failed" });
