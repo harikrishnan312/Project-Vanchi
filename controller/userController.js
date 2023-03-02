@@ -179,7 +179,7 @@ const verifyMail = async (req, res) => {
 
 
         const userData = await User.findOne({ _id: req.query.id });
-        console.log(req.query.id);
+        // console.log(req.query.id);
 
         const enterotp = await req.body.otp;
 
@@ -193,15 +193,14 @@ const verifyMail = async (req, res) => {
                     is_verified: 1
                 }
             });
-            console.log(otpcheck);
-            res.render('login', { message: "EMAIL successfully verified" })
+            // console.log(otpcheck);
+            res.render('otpVerify', { message: "EMAIL successfully verified" })
 
         } else {
             res.render('otpVerify', {
                 message: "invalid otp please check and retry"
             })
         }
-
     }
     catch (error) {
 
