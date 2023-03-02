@@ -908,67 +908,57 @@ const updateDate = async (req, res) => {
 
         const id = req.query.id;
         const userData = await User.findOne({ _id: req.session.user_id })
-        const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
-        const datedata = await Dates.findOne({ checkin: req.body.checkin });
+        const packagecheck = await Dates.findOne()
+        const datedata = await Dates.findOne();
         const packageData = await Package.findOne({ _id: id });
         const checkinCheck = await Dates.findOne({
-            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
+            $or: [{ checkin: req.body.checkin }, { $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
             { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
             { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
         });
+        if (packagecheck && checkinCheck && checkinCheck.is_booked) {
 
-        if (packagecheck) {
+            res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
 
-            if (datedata && datedata.is_booked) {
+        } else {
 
-                res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-            }
-            else {
-                if (checkinCheck && checkinCheck.is_booked) {
-                    res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-
-                } else {
-
-                    const date = await Dates.updateOne({ _id: req.query.dateid }, {
-                        $set: {
-                            checkin: req.body.checkin,
-                            checkout: req.body.checkout,
-                            package_id: req.body.packageid,
-                            user_id: userData._id,
-                            is_booked: true
-                        }
-                    })
-                    const dates = await Dates.findOne({ _id: req.query.dateid });
-                    const checkIn = moment(dates.checkin);
-                    const checkOut = moment(dates.checkout);
-                    const checkinData = checkIn.format('MMMM DD YYYY');
-                    const checkoutData = checkOut.format('MMMM DD YYYY');
-
-                    const checkout = dates.checkout;
-                    const checkin = dates.checkin;
-                    const checkindate = moment(checkin, 'YYYY-MM-DD');
-                    const checkoutdate = moment(checkout, 'YYYY-MM-DD');
-                    const days = checkoutdate.diff(checkindate, 'days');
-                    const totalPrice = (packageData.price * days);
-
-
-                    const booking = await Booking.updateOne({ date_id: dates._id }, {
-                        $set: {
-                            package_id: dates.package_id,
-                            user_id: userData._id,
-                            date_id: dates._id,
-                            price: totalPrice,
-                            checkin: checkinData,
-                            checkout: checkoutData,
-                            days: days,
-                            guests: guests
-                        }
-                    })
-
-                    res.redirect('/bookingsCart')
+            const date = await Dates.updateOne({ _id: req.query.dateid }, {
+                $set: {
+                    checkin: req.body.checkin,
+                    checkout: req.body.checkout,
+                    package_id: req.body.packageid,
+                    user_id: userData._id,
+                    is_booked: true
                 }
+            })
+            const dates = await Dates.findOne({ _id: req.query.dateid });
+            const checkIn = moment(dates.checkin);
+            const checkOut = moment(dates.checkout);
+            const checkinData = checkIn.format('MMMM DD YYYY');
+            const checkoutData = checkOut.format('MMMM DD YYYY');
 
-            }
+            const checkout = dates.checkout;
+            const checkin = dates.checkin;
+            const checkindate = moment(checkin, 'YYYY-MM-DD');
+            const checkoutdate = moment(checkout, 'YYYY-MM-DD');
+            const days = checkoutdate.diff(checkindate, 'days');
+            const totalPrice = (packageData.price * days);
+
+
+            const booking = await Booking.updateOne({ date_id: dates._id }, {
+                $set: {
+                    package_id: dates.package_id,
+                    user_id: userData._id,
+                    date_id: dates._id,
+                    price: totalPrice,
+                    checkin: checkinData,
+                    checkout: checkoutData,
+                    days: days,
+                    guests: guests
+                }
+            })
+
+            res.redirect('/bookingsCart')
         }
 
 
