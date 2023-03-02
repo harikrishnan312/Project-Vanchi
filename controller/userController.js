@@ -166,7 +166,7 @@ const insertUser = async (req, res) => {
 }
 const otpverification = async (req, res) => {
     try {
-        res.render('otpverify', { message: 'please check email for otp' });
+        res.render('otpVerify', { message: 'please check email for otp' });
     } catch (error) {
         console.log(error.message);
     }
