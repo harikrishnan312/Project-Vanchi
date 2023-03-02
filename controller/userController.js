@@ -197,7 +197,7 @@ const verifyMail = async (req, res) => {
             res.render('login', { message: "EMAIL successfully verified" })
 
         } else {
-            res.render('otpverify', {
+            res.render('otpVerify', {
                 message: "invalid otp please check and retry"
             })
         }
