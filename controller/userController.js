@@ -313,7 +313,7 @@ const forgetPasswordLoad = async (req, res) => {
 
         if (tokenData) {
 
-            res.render('forgetPaswordEmail', { user_id: tokenData._id });
+            res.render('forgetPasswordEmail', { user_id: tokenData._id });
 
         } else {
             res.render('404', { message: "Token is invalid" });
