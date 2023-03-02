@@ -259,7 +259,7 @@ const sendResetPasswordMail = async (name, email, token) => {
             from: config.emailUser,
             to: email,
             subject: 'For Reset password',
-            html: '<p>Hii ' + name + ' please click here to <a href="http://localhost:3000/forget-password?token=' + token + '"> Reset </a> your password.</p>'
+            html: '<p>Hii ' + name + ' please click here to <a href="https://vanchi.online/forgetpassword' + token + '"> Reset </a> your password.</p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
