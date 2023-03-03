@@ -494,7 +494,7 @@ const editProfile = async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.session.user_id })
 
-        res.render('editprofile', { userData: userData })
+        res.render('editProfile', { userData: userData })
     } catch (error) {
         console.log(error.message);
     }
@@ -520,7 +520,7 @@ const updateProfile = async (req, res) => {
 const editPassword = async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.session.user_id });
-        res.render('editpassword', { userData: userData });
+        res.render('editPassword', { userData: userData });
 
     } catch (error) {
         console.log(error.message);
@@ -552,7 +552,7 @@ const updatePassword = async (req, res) => {
                 res.redirect('/profile');
 
             } else {
-                res.render('editpassword', { message: "Passwords doesn't match" })
+                res.render('editPassword', { message: "Passwords doesn't match" })
             }
 
 
