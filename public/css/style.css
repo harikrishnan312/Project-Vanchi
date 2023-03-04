@@ -1835,3 +1835,6 @@ color: rgb(0, 161, 0);
   height: 10em;
   width: 15em;
 }
+.form-control{
+  background-color: #e9ecef;
+}

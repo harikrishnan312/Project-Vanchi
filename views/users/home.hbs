@@ -130,7 +130,7 @@
                     <a href="/home" class="nav-link text-left">Home</a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link text-left">About Us</a>
+                    <a href="#about" class="nav-link text-left">About Us</a>
                   </li>
                   <li>
                     <a href="#package" class="nav-link text-left">Packages</a>
@@ -140,7 +140,7 @@
                   </li>
                   <li><a href="/bookingscart" class="nav-link text-left">Bookings cart</a></li>
                   <li>
-                    <a href="#" class="nav-link text-left">Contact us</a>
+                    <a href="//wa.me/919645969312" class="nav-link text-left">Contact us</a>
                   </li>
                   <li>
                     {{else}}
@@ -243,7 +243,7 @@
       </div>
     </div>
 
-    <div class="site-section">
+    <div class="site-section" id="about">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -315,16 +315,30 @@
 
             <h2 class="mb-5 text-center date">Available packages</h2>
             <form action="" class="row" method="post">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="input_from">From</label>
-                  <input type="text" class="form-control" id="input_from" name="checkin" placeholder="Checkin" value="{{checkinDate}}" required>
+                  <input type="text" class="form-control" id="input_from" name="checkin" placeholder="Checkin"
+                    value="{{checkinDate}}" required>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="input_to">To</label>
-                  <input type="text" class="form-control" id="input_to" name="checkout" placeholder="Checkout" value="{{checkoutDate}}" required>
+                  <input type="text" class="form-control" id="input_to" name="checkout" placeholder="Checkout"
+                    value="{{checkoutDate}}" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="input_to">Rooms</label>
+                  <select class="form-control" aria-label="Default select example" name="category"
+                    required>
+                    <option selected>All</option>
+                    {{#each packageRoom}}
+                    <option class="">{{this.room}}</option>
+                    {{/each}}
+                  </select>
                 </div>
               </div>
               <div class="col-md-6">
@@ -334,7 +348,7 @@
                   {{else}}
                   <input type="submit" id="signup" class="form-submit" value="Check available packages" disabled />
                   <br><br>
-                  <h5 style="color: blue;">It appears that in order to proceed further, a login is required .....</h5> 
+                  <h5 style="color: blue;">It appears that in order to proceed further, a login is required .....</h5>
                   {{/if}}
                 </div>
               </div>
@@ -354,11 +368,12 @@
             <span class="text-serif text-primary">Packages</span>
             <h3 class="heading-92913 text-black text-center">Our Packages</h3>
           </div>
+
         </div>
         <div class="package-list">
           {{#if availablePackage}}
           {{#if userData}}
-          {{#each availablePackage}}
+          {{#each availablePackage }}
           <div class="package-item " style="flex-basis: 30%; margin: 1%;">
             <a href="/packageview?id={{this._id}}">
               <div class="card cardpackage">
@@ -391,7 +406,6 @@
               </div>
             </a>
           </div>
-
           {{/each}}
           {{else}}
           {{#each package}}
@@ -408,14 +422,13 @@
             </div>
           </div>
 
+
           {{/each}}
           {{/if}}
           {{/if}}
         </div>
       </div>
     </div>
-
-
     <div class="site-section">
       <div class="container">
         <div class="row justify-content-center mb-5">
@@ -550,7 +563,8 @@
         <div class="row justify-content-center">
           <div class="col-md-7 text-center">
             <h2 class="text-white">Get In Touch With Us</h2>
-            <p class="mb-0"><a href="#" class="btn btn-warning py-3 px-5 text-white">Contact Us</a></p>
+            <p class="mb-0"><a href="//wa.me/919645969312" class="btn btn-warning py-3 px-5 text-white">Contact Us</a>
+            </p>
           </div>
         </div>
       </div>
@@ -620,6 +634,7 @@
       <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
         stroke="#ff5e15" />
     </svg></div>
+
 
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>

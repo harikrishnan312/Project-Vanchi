@@ -415,11 +415,12 @@ const loadhome = async (req, res) => {
 
         const bannerData = await Banner.find()
         const packageData = await Package.find({ is_available: true })
+        const categoryData = await Category.find({});
         if (req.session.user_id) {
             const userData = await User.findById({ _id: req.session.user_id });
-            res.render('home', { package: packageData, userData: userData, banner: bannerData })
+            res.render('home', { package: packageData, userData: userData, banner: bannerData ,packageRoom:categoryData})
         } else {
-            res.render('home', { package: packageData, banner: bannerData })
+            res.render('home', { package: packageData, banner: bannerData ,packageRoom:categoryData })
         }
 
 
@@ -429,9 +430,12 @@ const loadhome = async (req, res) => {
 }
 const packageCheck = async (req, res) => {
     try {
-
+        let packageCheck;
         const checkinDate = req.body.checkin;
         const checkoutDate = req.body.checkout;
+        const categoryData = req.body.category;
+        const categoryDatas = await Category.find({});
+        // console.log(categoryData);
         const userData = await User.findById({ _id: req.session.user_id });
 
         const bannerData = await Banner.find({})
@@ -444,22 +448,26 @@ const packageCheck = async (req, res) => {
         }, { package_id: 1, _id: 0 });
         if (checkinCheck) {
             const arr = checkinCheck.map(({ package_id }) => (package_id))
+            if (categoryData==='All') {
+                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
+            } else {
+                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category:categoryData })
+            }
 
-            const packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
 
             if (packageCheck.length === 0) {
 
                 res.render('home', {
                     userData: userData,
                     message: 'Packages fully booked for selected date, please choose another date',
-                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate
+                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
                 })
 
             } else {
 
                 res.render('home', {
                     userData: userData, banner: bannerData,
-                    availablePackage: packageCheck, checkinDate, checkoutDate
+                    availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
                 })
             }
         } else {
@@ -467,13 +475,9 @@ const packageCheck = async (req, res) => {
 
             res.render('home', {
                 userData: userData, banner: bannerData,
-                availablePackage: packageCheck, checkinDate, checkoutDate
+                availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
             })
         }
-
-
-
-
 
     } catch (error) {
         console.log(error.message);
@@ -1078,6 +1082,8 @@ const couponsLoad = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
 module.exports = {
     loginPage,
     signupPage,
@@ -1108,5 +1114,5 @@ module.exports = {
     createOrderId,
     paymentVerify,
     couponsLoad,
-    packageCheck
+    packageCheck,
 }
