@@ -88,5 +88,4 @@ userRoute.get('/deleteBooking', auth.isLogin, userController.deleteBookings);
 
 userRoute.post('/coupons',auth.isLogin,userController.couponsLoad);
 
-
 module.exports = userRoute;

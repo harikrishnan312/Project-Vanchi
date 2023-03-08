@@ -391,7 +391,7 @@ h1, h2, h3, h4, h5,
   right: 0;
   z-index: 2000;
   padding-top: 20px;
-  background: #fff;
+  background: #90bdff;
   height: calc(100vh);
   -webkit-transform: translateX(110%);
   -ms-transform: translateX(110%);
@@ -1805,7 +1805,7 @@ color: rgb(0, 161, 0);
     color: white;
     border-radius: .2em;
     border-color: red;
-    width: 3.7em;
+    /* width: 3.7em; */
   }
   .delete-button{
     background-color: red;
@@ -1834,4 +1834,7 @@ color: rgb(0, 161, 0);
 .team{
   height: 10em;
   width: 15em;
+}
+.form-control{
+  background-color: #e9ecef;
 }

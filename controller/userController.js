@@ -179,7 +179,7 @@ const verifyMail = async (req, res) => {
 
 
         const userData = await User.findOne({ _id: req.query.id });
-        console.log(req.query.id);
+        // console.log(req.query.id);
 
         const enterotp = await req.body.otp;
 
@@ -193,15 +193,14 @@ const verifyMail = async (req, res) => {
                     is_verified: 1
                 }
             });
-            console.log(otpcheck);
-            res.render('login', { message: "EMAIL successfully verified" })
+            // console.log(otpcheck);
+            res.render('otpVerify', { message: "EMAIL successfully verified" })
 
         } else {
             res.render('otpVerify', {
                 message: "invalid otp please check and retry"
             })
         }
-
     }
     catch (error) {
 
@@ -416,11 +415,12 @@ const loadhome = async (req, res) => {
 
         const bannerData = await Banner.find()
         const packageData = await Package.find({ is_available: true })
+        const categoryData = await Category.find({});
         if (req.session.user_id) {
             const userData = await User.findById({ _id: req.session.user_id });
-            res.render('home', { package: packageData, userData: userData, banner: bannerData })
+            res.render('home', { package: packageData, userData: userData, banner: bannerData ,packageRoom:categoryData})
         } else {
-            res.render('home', { package: packageData, banner: bannerData })
+            res.render('home', { package: packageData, banner: bannerData ,packageRoom:categoryData })
         }
 
 
@@ -430,9 +430,12 @@ const loadhome = async (req, res) => {
 }
 const packageCheck = async (req, res) => {
     try {
-
+        let packageCheck;
         const checkinDate = req.body.checkin;
         const checkoutDate = req.body.checkout;
+        const categoryData = req.body.category;
+        const categoryDatas = await Category.find({});
+        // console.log(categoryData);
         const userData = await User.findById({ _id: req.session.user_id });
 
         const bannerData = await Banner.find({})
@@ -445,22 +448,26 @@ const packageCheck = async (req, res) => {
         }, { package_id: 1, _id: 0 });
         if (checkinCheck) {
             const arr = checkinCheck.map(({ package_id }) => (package_id))
+            if (categoryData==='All') {
+                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
+            } else {
+                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category:categoryData })
+            }
 
-            const packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
 
             if (packageCheck.length === 0) {
 
                 res.render('home', {
                     userData: userData,
                     message: 'Packages fully booked for selected date, please choose another date',
-                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate
+                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
                 })
 
             } else {
 
                 res.render('home', {
                     userData: userData, banner: bannerData,
-                    availablePackage: packageCheck, checkinDate, checkoutDate
+                    availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
                 })
             }
         } else {
@@ -468,13 +475,9 @@ const packageCheck = async (req, res) => {
 
             res.render('home', {
                 userData: userData, banner: bannerData,
-                availablePackage: packageCheck, checkinDate, checkoutDate
+                availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
             })
         }
-
-
-
-
 
     } catch (error) {
         console.log(error.message);
@@ -495,7 +498,7 @@ const editProfile = async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.session.user_id })
 
-        res.render('editprofile', { userData: userData })
+        res.render('editProfile', { userData: userData })
     } catch (error) {
         console.log(error.message);
     }
@@ -521,7 +524,7 @@ const updateProfile = async (req, res) => {
 const editPassword = async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.session.user_id });
-        res.render('editpassword', { userData: userData });
+        res.render('editPassword', { userData: userData });
 
     } catch (error) {
         console.log(error.message);
@@ -553,7 +556,7 @@ const updatePassword = async (req, res) => {
                 res.redirect('/profile');
 
             } else {
-                res.render('editpassword', { message: "Passwords doesn't match" })
+                res.render('editPassword', { message: "Passwords doesn't match" })
             }
 
 
@@ -908,67 +911,65 @@ const updateDate = async (req, res) => {
 
         const id = req.query.id;
         const userData = await User.findOne({ _id: req.session.user_id })
-        const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
-        const datedata = await Dates.findOne({ checkin: req.body.checkin });
+        // const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
         const packageData = await Package.findOne({ _id: id });
+        console.log(packageData);
         const checkinCheck = await Dates.findOne({
-            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
-            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
-            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
+            $and: [{ package_id: req.body.packageid },
+            {
+                $or: [{ checkin: req.body.checkin }, { $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
+                { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
+                { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
+            }]
         });
+        if (checkinCheck && checkinCheck.is_booked) {
 
-        if (packagecheck) {
-
-            if (datedata && datedata.is_booked) {
-
-                res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-            }
-            else {
-                if (checkinCheck && checkinCheck.is_booked) {
-                    res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-
-                } else {
-
-                    const date = await Dates.updateOne({ _id: req.query.dateid }, {
-                        $set: {
-                            checkin: req.body.checkin,
-                            checkout: req.body.checkout,
-                            package_id: req.body.packageid,
-                            user_id: userData._id,
-                            is_booked: true
-                        }
-                    })
-                    const dates = await Dates.findOne({ _id: req.query.dateid });
-                    const checkIn = moment(dates.checkin);
-                    const checkOut = moment(dates.checkout);
-                    const checkinData = checkIn.format('MMMM DD YYYY');
-                    const checkoutData = checkOut.format('MMMM DD YYYY');
-
-                    const checkout = dates.checkout;
-                    const checkin = dates.checkin;
-                    const checkindate = moment(checkin, 'YYYY-MM-DD');
-                    const checkoutdate = moment(checkout, 'YYYY-MM-DD');
-                    const days = checkoutdate.diff(checkindate, 'days');
-                    const totalPrice = (packageData.price * days);
-
-
-                    const booking = await Booking.updateOne({ date_id: dates._id }, {
-                        $set: {
-                            package_id: dates.package_id,
-                            user_id: userData._id,
-                            date_id: dates._id,
-                            price: totalPrice,
-                            checkin: checkinData,
-                            checkout: checkoutData,
-                            days: days,
-                            guests: guests
-                        }
-                    })
-
-                    res.redirect('/bookingsCart')
+            res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
+            
+            await Dates.updateOne({ _id: req.query.dateid }, {
+                $set: {
+                    is_booked: true
                 }
+            })
+        } else {
 
-            }
+            const date = await Dates.updateOne({ _id: req.query.dateid }, {
+                $set: {
+                    checkin: req.body.checkin,
+                    checkout: req.body.checkout,
+                    package_id: req.body.packageid,
+                    user_id: userData._id,
+                    is_booked: true
+                }
+            })
+            const dates = await Dates.findOne({ _id: req.query.dateid });
+            const checkIn = moment(dates.checkin);
+            const checkOut = moment(dates.checkout);
+            const checkinData = checkIn.format('MMMM DD YYYY');
+            const checkoutData = checkOut.format('MMMM DD YYYY');
+
+            const checkout = dates.checkout;
+            const checkin = dates.checkin;
+            const checkindate = moment(checkin, 'YYYY-MM-DD');
+            const checkoutdate = moment(checkout, 'YYYY-MM-DD');
+            const days = checkoutdate.diff(checkindate, 'days');
+            const totalPrice = (packageData.price * days);
+
+
+            const booking = await Booking.updateOne({ date_id: dates._id }, {
+                $set: {
+                    package_id: dates.package_id,
+                    user_id: userData._id,
+                    date_id: dates._id,
+                    price: totalPrice,
+                    checkin: checkinData,
+                    checkout: checkoutData,
+                    days: days,
+                    guests: guests
+                }
+            })
+
+            res.redirect('/bookingsCart')
         }
 
 
@@ -1081,6 +1082,8 @@ const couponsLoad = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
 module.exports = {
     loginPage,
     signupPage,
@@ -1111,5 +1114,5 @@ module.exports = {
     createOrderId,
     paymentVerify,
     couponsLoad,
-    packageCheck
+    packageCheck,
 }
