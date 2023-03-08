@@ -806,3 +806,7 @@ p {
 .modal-title{
   padding: 1em;
 }
+.packageImg{
+  width: 40em;
+  height: 20em;
+}
