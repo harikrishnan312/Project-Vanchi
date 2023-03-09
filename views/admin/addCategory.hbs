@@ -4,47 +4,84 @@
 <head>
   <title>add category</title>
   <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/stylesheet/signup.css">
 
 </head>
 
 <body>
- <div class="main">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/admin/home">Vanchi</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/packages">package list</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/users">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/category">Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/banner">Banner</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/bookings">Bookings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/coupons">Coupons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="main">
 
 
-  <!-- Sing in  Form -->
-  <section class="sign-in">
-    <div class="container">
-      <div class="signin-content">
-        <div class="signin-image">
-          <img src="/images/Vanchi logo.jpg" alt="">
-          <br>
-          
+    <!-- Sing in  Form -->
+    <section class="sign-in">
+      <div class="container">
+        <div class="signin-content">
+          <div class="signin-image">
+            <img src="/images/Vanchi logo.jpg" alt="">
+            <br>
 
-        </div>
 
-        <div class="signin-form">
-          <h2 class="form-title">Add Category</h2>
-          <form action="" method="POST" class="register-form" id="login-form">
-           
-            <div class="form-group">
-              <label for="name"><i class="zmdi zmdi-lock"></i></label>
-              <input type="text" name="room" placeholder="No. of rooms" pattern="[0-9]+"/ required>
-            </div>
+          </div>
 
-            <div class="form-group form-button">
-              <input type="submit" class="form-submit" value="Add category" />
-            </div>
+          <div class="signin-form">
+            <h2 class="form-title">Add Category</h2>
+            <form action="" method="POST" class="register-form" id="login-form">
 
-            <div class="messagelogin"> <h4>{{message}} </h4></div>
-          </form>
-         
+              <div class="form-group">
+                <label for="name"><i class="zmdi zmdi-lock"></i></label>
+                <input type="text" name="room" placeholder="No. of rooms" pattern="[0-9]+" / required>
+              </div>
+
+              <div class="form-group form-button">
+                <input type="submit" class="form-submit" value="Add category" />
+              </div>
+
+              <div class="messagelogin">
+                <h4>{{message}} </h4>
+              </div>
+            </form>
+
             </ul>
           </div>
         </div>
       </div>
-    </div>
+  </div>
   </section>
 
   </div>

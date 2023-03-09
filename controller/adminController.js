@@ -605,7 +605,6 @@ const couponLoad = async (req, res) => {
                 ...coupons._doc,
                 expiry_date: moment(coupons.expiry_date).format("MM/DD/YYYY"),
               }));
-              console.log(formattedCouponData);
             res.render('couponsLoad', { coupon:formattedCouponData })
         }
 
