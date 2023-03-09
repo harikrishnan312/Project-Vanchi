@@ -601,7 +601,11 @@ const couponLoad = async (req, res) => {
     try {
         const coupon = await Coupon.find({})
         if (coupon) {
-            res.render('couponsLoad', { coupon: coupon })
+            const formattedCouponData = coupon.map((coupons) => ({
+                ...coupons._doc,
+                expiry_date: moment(coupons.expiry_date).format("MM/DD/YYYY"),
+              }));
+            res.render('couponsLoad', { coupon:formattedCouponData })
         }
 
     } catch (error) {

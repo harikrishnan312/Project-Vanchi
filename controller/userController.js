@@ -982,7 +982,11 @@ const bookingsLoad = async (req, res) => {
     try {
         const bookingData = await confirmBooking.find({ user_id: req.session.user_id }).sort({ date: -1 });
         if (bookingData) {
-            res.render('bookings', { booking: bookingData })
+            const formattedBookingData = bookingData.map((booking) => ({
+                ...booking._doc,
+                date: moment(booking.date).format("MM/DD/YYYY"),
+              }));
+            res.render('bookings', { booking:formattedBookingData})
         }
     } catch (error) {
         console.log(error.message);
