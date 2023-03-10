@@ -84,6 +84,8 @@ adminRoute.get('/bookings',adminAuth.isLogin,adminController.bookingsLoad);
 
 adminRoute.get('/status',adminAuth.isLogin,adminController.statusChange);
 
+adminRoute.get('/cancel',adminAuth.isLogin,adminController.cancelBooking);
+
 
 adminRoute.get('/addCoupon',adminAuth.isLogin,adminController.addCoupon);
 

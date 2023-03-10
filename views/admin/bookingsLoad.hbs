@@ -101,7 +101,13 @@
                                                 class="btn btn-success">Completed</button></a></td>
                                     {{else}}
                                     <td><a href="/admin/status?id={{_id}}"><button class="btn btn-warning">Not
-                                                Completed</button></a></td>
+                                                Completed</button></a>
+                                                <br><br>
+                                                {{#if is_blocked}}
+                                                <a href="/admin/cancel?id={{_id}}"><button class="btn btn-danger">UnBlock booking</button></a></td>
+                                                {{else}}
+                                                <a href="/admin/cancel?id={{_id}}"><button class="btn btn-danger">Block booking</button></a></td>
+                                                {{/if}}
                                     {{/if}}
 
                                 </tr>

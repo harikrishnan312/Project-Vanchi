@@ -33,6 +33,10 @@ const confirmBookingSchema = mongoose.Schema({
     status:{
         type:Boolean,
        default:false
+    },
+    is_blocked:{
+        type:Boolean,
+        default:false
     }
 })
 

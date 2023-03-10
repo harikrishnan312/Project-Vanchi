@@ -191,7 +191,6 @@
                             {{/if}}
                             <h6 class="text-black "> Order ID : {{this.order_id}}</h6>
                             <br>
-                            {{!-- <h6 class="text-black "> Payment method : {{payment_method}}</h6> --}}
                             <h6 class="text-black "> Checkin : {{booking_id.0.checkin}}</h6>
                             <h6 class="text-black "> Checkout : {{booking_id.0.checkout}}</h6>
                             <br>
@@ -222,7 +221,10 @@
                               class="text-muted" data-toggle="modal" data-target="#exampleModalCenter{{@index}}"><button
                                 class="btn btn-danger">Cancel Booking</button></a>
                             {{/if}}
-
+                            <br><br>
+                            {{#if is_blocked}}
+                            <p class="text-danger">Booking is temporary blocked..</p>
+                            {{/if}}
                           </div>
                         </div>
                         <!-- Modal -->
@@ -276,7 +278,8 @@
         <div class="row justify-content-center">
           <div class="col-md-7 text-center">
             <h2 class="text-white">Get In Touch With Us</h2>
-            <p class="mb-0"><a href="//wa.me/919645969312" class="btn btn-warning py-3 px-5 text-white">Contact Us</a></p>
+            <p class="mb-0"><a href="//wa.me/919645969312" class="btn btn-warning py-3 px-5 text-white">Contact Us</a>
+            </p>
           </div>
         </div>
       </div>

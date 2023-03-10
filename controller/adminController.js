@@ -70,6 +70,8 @@ const verifyLogin = async (req, res) => {
 const loadhome = async (req, res) => {
     try {
         const months = {};
+        const years = {};
+        const days = {};
         const monthNames = [
             "Jan",
             "Feb",
@@ -88,33 +90,39 @@ const loadhome = async (req, res) => {
         const bookingdate = await confirmBooking.find({});
         bookingdate.forEach(function (booking) {
             let bookingDate = new Date(booking.date);
+            let year = bookingDate.getFullYear();
+            if (!years[year]) {
+                years[year] = 0;
+            }
+            years[year]++;
+            let day = bookingDate.getDate();
+            if (!days[day]) {
+                days[day] = 0;
+            }
+            days[day]++;
             let month = monthNames[bookingDate.getMonth()];
             if (!months[month]) {
                 months[month] = 0;
             }
             months[month]++;
-
         });
 
-        const result = await confirmBooking.aggregate([
-            {
-                $group: {
-                    _id: {
-                        month: { $month: "$month" },
-                        year: { $year: "$year" }
-                    },
-                    count: { $sum: 1 },
-                },
-            },
-        ]);
+        Promise.all([
+            User.countDocuments(),
+            Coupon.countDocuments(),
+            Package.countDocuments(),
+            Category.countDocuments(),
+            confirmBooking.countDocuments()
+        ])
+            .then((results) => {
+                const users = results[0];
+                const coupons = results[1];
+                const packages = results[2];
+                const categories = results[3];
+                const bookings = results[4];
 
-        const users = await User.countDocuments();
-        const coupons = await Coupon.countDocuments();
-        const packages = await Package.countDocuments();
-        const categories = await Category.countDocuments();
-        const bookings = await confirmBooking.countDocuments();
-
-        res.render('home', { months, result, users, coupons, packages, categories, bookings })
+                res.render('home', { years, days, months, users, coupons, packages, categories, bookings });
+            })
     } catch (error) {
         console.log(error.message);
     }
@@ -226,10 +234,10 @@ const insertPackage = async (req, res) => {
 
     try {
         const images = req.files.map((file) => {
-            
+
             return file.filename
         })
- 
+
 
         const package = new Package({
             name: req.body.name,
@@ -271,19 +279,19 @@ const updatePackage = async (req, res) => {
 
         const id = req.body.id
         if (images.length === 0) {
-             await Package.findByIdAndUpdate({ _id: id }, {
+            await Package.findByIdAndUpdate({ _id: id }, {
                 $set: {
                     name: req.body.name,
                     category: req.body.category,
                     class: req.body.class,
                     price: req.body.price,
                     description: req.body.description,
- 
+
                 }
             });
         }
         else {
-             await Package.findByIdAndUpdate({ _id: id }, {
+            await Package.findByIdAndUpdate({ _id: id }, {
                 $set: {
                     name: req.body.name,
                     category: req.body.category,
@@ -535,6 +543,23 @@ const bookingsLoad = async (req, res) => {
         console.log(error.message);
     }
 }
+const cancelBooking = async (req, res) => {
+    try {
+        const id = req.query.id
+
+        const booking = await confirmBooking.findOne({ _id: id });
+        if (booking.is_blocked) {
+            await confirmBooking.updateOne({ _id: id }, { $set: { is_blocked: false } });
+        }
+        else {
+            await confirmBooking.updateOne({ _id: id }, { $set: { is_blocked: true } });
+        }
+        res.redirect('/admin/bookings')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 const bookingsReport = async (req, res) => {
     try {
         const bookings = await confirmBooking.find({ status: true });
@@ -604,8 +629,8 @@ const couponLoad = async (req, res) => {
             const formattedCouponData = coupon.map((coupons) => ({
                 ...coupons._doc,
                 expiry_date: moment(coupons.expiry_date).format("MM/DD/YYYY"),
-              }));
-            res.render('couponsLoad', { coupon:formattedCouponData })
+            }));
+            res.render('couponsLoad', { coupon: formattedCouponData })
         }
 
     } catch (error) {
@@ -689,5 +714,6 @@ module.exports = {
     couponEdit,
     updateCoupon,
     statusChange,
-    bookingsReport
+    bookingsReport,
+    cancelBooking
 }
