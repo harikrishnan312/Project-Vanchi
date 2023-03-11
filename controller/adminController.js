@@ -69,6 +69,7 @@ const verifyLogin = async (req, res) => {
 }
 const loadhome = async (req, res) => {
     try {
+        const packagesData = {};
         const months = {};
         const years = {};
         const days = {};
@@ -88,18 +89,37 @@ const loadhome = async (req, res) => {
         ];
 
         const bookingdate = await confirmBooking.find({});
+
         bookingdate.forEach(function (booking) {
             let bookingDate = new Date(booking.date);
+            let packageName = booking.booking_id[0].package_name;
+
+            if (booking.booking_id[1]) {
+
+                let packageNames = booking.booking_id[1].package_name;
+
+                if (!packagesData[packageNames]) {
+                    packagesData[packageNames] = 0;
+                }
+                packagesData[packageNames]++;
+            }
+            if (!packagesData[packageName]) {
+                packagesData[packageName] = 0;
+            }
+            packagesData[packageName]++;
+
             let year = bookingDate.getFullYear();
             if (!years[year]) {
                 years[year] = 0;
             }
             years[year]++;
+
             let day = bookingDate.getDate();
             if (!days[day]) {
                 days[day] = 0;
             }
             days[day]++;
+
             let month = monthNames[bookingDate.getMonth()];
             if (!months[month]) {
                 months[month] = 0;
@@ -121,7 +141,7 @@ const loadhome = async (req, res) => {
                 const categories = results[3];
                 const bookings = results[4];
 
-                res.render('home', { years, days, months, users, coupons, packages, categories, bookings });
+                res.render('home', { packagesData, years, days, months, users, coupons, packages, categories, bookings });
             })
     } catch (error) {
         console.log(error.message);

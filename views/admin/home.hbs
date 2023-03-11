@@ -194,6 +194,10 @@
       </div>
       </div>
       </div>
+        <div>
+          <h2 style="text-align: center;">Bookings per packages</h2>
+        <canvas id="myChart4" style=" padding: 5em; "></canvas>
+      </div>
          <div>
           <h2 style="text-align: center;">Bookings per month</h2>
         <canvas id="myChart" style=" padding: 5em; "></canvas>
@@ -278,6 +282,34 @@ let ctz = document.getElementById("myChart3").getContext("2d");
     datasets: [{
         label: "Bookings",
         data: [{{#each years}}{{this}} ,{{/each}}],
+        backgroundColor:['yellow','green','red','orange','brown','blue','cyan'],
+            borderColor: '',
+                borderWidth: 1,
+                barThickness: 40
+    },]
+  },
+    options: {
+        animation: {
+            duration: 2000,
+                easing: "easeInOutQuad"
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+   }
+});
+let ct4 = document.getElementById("myChart4").getContext("2d");
+    let myChart4 = new Chart(ct4, {
+        type: "bar",
+        data: {
+            labels: [{{#each packagesData}}"{{@key}}",{{/each}}],
+    datasets: [{
+        label: "Bookings",
+        data: [{{#each packagesData}}{{this}} ,{{/each}}],
         backgroundColor:['yellow','green','red','orange','brown','blue','cyan'],
             borderColor: '',
                 borderWidth: 1,
