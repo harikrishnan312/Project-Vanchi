@@ -395,7 +395,7 @@ const verifyLogin = async (req, res) => {
 
             }
             else {
-                res.render('login', { message: "You are blocked" })
+                res.render('login', { error: "You are blocked" })
                 
             }
         }
