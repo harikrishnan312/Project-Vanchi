@@ -51,7 +51,8 @@
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="password" id="pass" placeholder="Password"
-                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$" required />
+                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$"
+                                    title="Must have upper and lower case ,numbers and characters" />
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
@@ -64,6 +65,7 @@
                             </div>
                             <div class="messagesignup">
                                 <h3>{{message}}</h3>
+                                <h3 style="color: red;">{{error}}</h3>
                             </div>
                         </form>
                     </div>

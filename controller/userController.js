@@ -157,7 +157,7 @@ const insertUser = async (req, res) => {
             }
         }
         else {
-            res.render('signup', { message: "Passwords not match" })
+            res.render('signup', { error: "Passwords not match" })
         }
     }
     catch (error) {
@@ -198,7 +198,7 @@ const verifyMail = async (req, res) => {
 
         } else {
             res.render('otpVerify', {
-                message: "invalid otp please check and retry"
+                error: "invalid otp please check and retry"
             })
         }
     }
@@ -297,7 +297,7 @@ const forgetVerify = async (req, res) => {
 
 
         } else {
-            res.render('forgetPassword', { message: "User email is incorrect." });
+            res.render('forgetPassword', { error: "User email is incorrect." });
         }
 
     } catch (error) {
@@ -315,7 +315,7 @@ const forgetPasswordLoad = async (req, res) => {
             res.render('forgetPasswordEmail', { user_id: tokenData._id });
 
         } else {
-            res.render('404', { message: "Token is invalid" });
+            res.render('404', { error: "Token is invalid" });
         }
 
 
@@ -366,10 +366,10 @@ const verifyLogin = async (req, res) => {
 
         const userData = await User.findOne({ email: email });
 
-        if (userData.is_blocked === false) {
+        
 
             if (userData) {
-
+                if (userData.is_blocked === false) {
 
                 const passwordMatch = await bcrypt.compare(password, userData.password);
 
@@ -395,12 +395,12 @@ const verifyLogin = async (req, res) => {
 
             }
             else {
-
-                res.render('login', { message: 'Email and password is incorrect' })
+                res.render('login', { message: "You are blocked" })
+                
             }
         }
         else {
-            res.render('login', { message: "You are blocked" })
+            res.render('login', { error: 'Email and password is incorrect' })
         }
 
     } catch (error) {

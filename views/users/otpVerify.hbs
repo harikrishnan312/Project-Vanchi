@@ -23,7 +23,7 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <img src="/images/Vanchi logo.jpg" alt="">
-                        <a href="/" class="signup-image-link">Back to Login page</a>
+                        <a href="/login" class="signup-image-link">Back to Login page</a>
                         <br>
                         {{!-- <a href="/otpverify" class="signup-image-link">Resent otp</a> --}}
 
@@ -45,6 +45,8 @@
 
                             <div class="messageforget">
                                 <h3>{{message}}</h3>
+                                <h3 style="color: red;">{{error}}</h3>
+
                             </div>
                         </form>
                         {{!-- <div class="social-login">
