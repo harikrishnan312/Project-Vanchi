@@ -601,12 +601,12 @@ const checkinCheck = async (req, res) => {
         const id = req.query.id;
         const userData = await User.findOne({ _id: req.session.user_id })
         const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
-        const datedata = await Dates.findOne({ checkin: req.body.checkin });
+        const datedata = await Dates.findOne({ checkin: req.body.checkin ,package_id:id});
         const packageData = await Package.findOne({ _id: id });
         const checkinCheck = await Dates.findOne({
-            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
-            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
-            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
+            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } },{package_id:id}] },
+            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } },{package_id:id}] },
+            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } },{package_id:id}] }]
         });
 
         if (bookingDate.length === 2) {
