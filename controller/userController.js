@@ -366,10 +366,10 @@ const verifyLogin = async (req, res) => {
 
         const userData = await User.findOne({ email: email });
 
-        
 
-            if (userData) {
-                if (userData.is_blocked === false) {
+
+        if (userData) {
+            if (userData.is_blocked === false) {
 
                 const passwordMatch = await bcrypt.compare(password, userData.password);
 
@@ -396,7 +396,7 @@ const verifyLogin = async (req, res) => {
             }
             else {
                 res.render('login', { error: "You are blocked" })
-                
+
             }
         }
         else {
@@ -418,9 +418,9 @@ const loadhome = async (req, res) => {
         const categoryData = await Category.find({});
         if (req.session.user_id) {
             const userData = await User.findById({ _id: req.session.user_id });
-            res.render('home', { package: packageData, userData: userData, banner: bannerData ,packageRoom:categoryData})
+            res.render('home', { package: packageData, userData: userData, banner: bannerData, packageRoom: categoryData })
         } else {
-            res.render('home', { package: packageData, banner: bannerData ,packageRoom:categoryData })
+            res.render('home', { package: packageData, banner: bannerData, packageRoom: categoryData })
         }
 
 
@@ -448,10 +448,10 @@ const packageCheck = async (req, res) => {
         }, { package_id: 1, _id: 0 });
         if (checkinCheck) {
             const arr = checkinCheck.map(({ package_id }) => (package_id))
-            if (categoryData==='All') {
+            if (categoryData === 'All') {
                 packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
             } else {
-                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category:categoryData })
+                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category: categoryData })
             }
 
 
@@ -460,14 +460,14 @@ const packageCheck = async (req, res) => {
                 res.render('home', {
                     userData: userData,
                     message: 'Packages fully booked for selected date, please choose another date',
-                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
+                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
                 })
 
             } else {
 
                 res.render('home', {
                     userData: userData, banner: bannerData,
-                    availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
+                    availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
                 })
             }
         } else {
@@ -475,7 +475,7 @@ const packageCheck = async (req, res) => {
 
             res.render('home', {
                 userData: userData, banner: bannerData,
-                availablePackage: packageCheck, checkinDate, checkoutDate,packageRoom:categoryDatas
+                availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
             })
         }
 
@@ -582,11 +582,11 @@ const userLogout = async (req, res) => {
 const packageload = async (req, res) => {
 
     try {
-
+        const checkin = req.query.in;
+        const checkout = req.query.out;
         const id = req.query.id
         const packageData = await Package.findOne({ _id: id })
-
-        res.render('packageView', { package: packageData });
+        res.render('packageView', { package: packageData, checkin, checkout });
     } catch (error) {
         console.log(error.message)
     }
@@ -601,14 +601,19 @@ const checkinCheck = async (req, res) => {
         const id = req.query.id;
         const userData = await User.findOne({ _id: req.session.user_id })
         const packagecheck = await Dates.findOne({ package_id: req.body.packageid })
-        const datedata = await Dates.findOne({ checkin: req.body.checkin ,package_id:id});
+        const datedata = await Dates.findOne({ checkin: req.body.checkin, package_id: id });
         const packageData = await Package.findOne({ _id: id });
-        const checkinCheck = await Dates.findOne({
-            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } },{package_id:id}] },
-            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } },{package_id:id}] },
-            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } },{package_id:id}] }]
-        });
 
+        let checkDate = new Date(checkinDate);
+        const checkin = (checkDate > new Date());
+
+        const checkinCheck = await Dates.findOne({
+            
+            $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }, { package_id: id }] },
+            { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }, { package_id: id }] },
+            { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }, { package_id: id }] }]
+        });
+        if (checkin){
         if (bookingDate.length === 2) {
             res.render('packageView', { message: "Booking Cart is full ", package: packageData })
         } else {
@@ -718,6 +723,9 @@ const checkinCheck = async (req, res) => {
                 }
             }
         }
+    }else{
+        res.render('packageView', { message: "Booking closed for these dates..", package: packageData })
+    }
 
 
 
@@ -925,7 +933,7 @@ const updateDate = async (req, res) => {
         if (checkinCheck && checkinCheck.is_booked) {
 
             res.render('editDate', { message: "Sorry Someone already taken your date ", package: packageData, dates: dates })
-            
+
             await Dates.updateOne({ _id: req.query.dateid }, {
                 $set: {
                     is_booked: true
@@ -985,8 +993,8 @@ const bookingsLoad = async (req, res) => {
             const formattedBookingData = bookingData.map((booking) => ({
                 ...booking._doc,
                 date: moment(booking.date).format("MM/DD/YYYY"),
-              }));
-            res.render('bookings', { booking:formattedBookingData})
+            }));
+            res.render('bookings', { booking: formattedBookingData })
         }
     } catch (error) {
         console.log(error.message);

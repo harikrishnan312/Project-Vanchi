@@ -375,7 +375,7 @@
           {{#if userData}}
           {{#each availablePackage }}
           <div class="package-item " style="flex-basis: 30%; margin: 1%;">
-            <a href="/packageview?id={{this._id}}">
+            <a href="/packageview?id={{this._id}}&in={{../checkinDate}}&out={{../checkoutDate}}">
               <div class="card cardpackage">
                 <img class="package-image" src="packageImages/{{this.image.[0]}}" alt="Image">
                 <br>
