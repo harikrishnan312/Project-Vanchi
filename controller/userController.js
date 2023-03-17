@@ -440,45 +440,57 @@ const packageCheck = async (req, res) => {
 
         const bannerData = await Banner.find({})
 
+        let checkDate = new Date(checkinDate);
+        const checkin = (checkDate > new Date());
+
         const checkinCheck = await Dates.find({
             $or: [{ checkin: req.body.checkin },
             { $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }] },
             { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }] },
             { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }] }]
         }, { package_id: 1, _id: 0 });
-        if (checkinCheck) {
-            const arr = checkinCheck.map(({ package_id }) => (package_id))
-            if (categoryData === 'All') {
-                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
+
+        if (checkin) {
+
+            if (checkinCheck) {
+                const arr = checkinCheck.map(({ package_id }) => (package_id))
+                if (categoryData === 'All') {
+                    packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true })
+                } else {
+                    packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category: categoryData })
+                }
+
+
+                if (packageCheck.length === 0) {
+
+                    res.render('home', {
+                        userData: userData,
+                        message: 'Packages fully booked for selected date, please choose another date',
+                        banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
+                    })
+
+                } else {
+
+                    res.render('home', {
+                        userData: userData, banner: bannerData,
+                        availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
+                    })
+                }
             } else {
-                packageCheck = await Package.find({ _id: { $nin: arr }, is_available: true, category: categoryData })
-            }
-
-
-            if (packageCheck.length === 0) {
-
-                res.render('home', {
-                    userData: userData,
-                    message: 'Packages fully booked for selected date, please choose another date',
-                    banner: bannerData, availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
-                })
-
-            } else {
+                const packageCheck = await Package.find({ is_available: true })
 
                 res.render('home', {
                     userData: userData, banner: bannerData,
                     availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
                 })
             }
-        } else {
-            const packageCheck = await Package.find({ is_available: true })
+        }else{
 
             res.render('home', {
-                userData: userData, banner: bannerData,
-                availablePackage: packageCheck, checkinDate, checkoutDate, packageRoom: categoryDatas
+                userData: userData,message:"Bookings closed for these dates, please choose another date", banner: bannerData,
+                availablePackage:[], checkinDate, checkoutDate, packageRoom: categoryDatas
             })
         }
-
     } catch (error) {
         console.log(error.message);
     }
@@ -608,124 +620,124 @@ const checkinCheck = async (req, res) => {
         const checkin = (checkDate > new Date());
 
         const checkinCheck = await Dates.findOne({
-            
+
             $or: [{ $and: [{ checkin: { $lt: checkinDate } }, { checkout: { $gt: checkinDate } }, { package_id: id }] },
             { $and: [{ checkin: { $lt: checkoutDate } }, { checkout: { $gt: checkoutDate } }, { package_id: id }] },
             { $and: [{ checkin: { $gt: checkinDate } }, { checkin: { $lt: checkoutDate } }, { package_id: id }] }]
         });
-        if (checkin){
-        if (bookingDate.length === 2) {
-            res.render('packageView', { message: "Booking Cart is full ", package: packageData })
-        } else {
-            if (packagecheck) {
+        if (checkin) {
+            if (bookingDate.length === 2) {
+                res.render('packageView', { message: "Booking Cart is full ", package: packageData })
+            } else {
+                if (packagecheck) {
 
-                if (datedata) {
+                    if (datedata) {
 
-                    res.render('packageView', { message: "Sorry Someone already taken your date ", package: packageData })
-                }
-                else {
-                    if (checkinCheck) {
                         res.render('packageView', { message: "Sorry Someone already taken your date ", package: packageData })
+                    }
+                    else {
+                        if (checkinCheck) {
+                            res.render('packageView', { message: "Sorry Someone already taken your date ", package: packageData })
 
-                    } else {
+                        } else {
 
-                        const date = new Dates({
-                            checkin: req.body.checkin,
-                            checkout: req.body.checkout,
-                            package_id: req.body.packageid,
-                            user_id: userData._id
-                        })
-                        const dateData = await date.save();
-                        if (dateData) {
-
-                            const checkIn = moment(dateData.checkin);
-                            const checkOut = moment(dateData.checkout);
-                            const checkinData = checkIn.format('MMMM DD YYYY');
-                            const checkoutData = checkOut.format('MMMM DD YYYY');
-
-                            const checkout = dateData.checkout;
-                            const checkin = dateData.checkin;
-                            const checkindate = moment(checkin, 'YYYY-MM-DD');
-                            const checkoutdate = moment(checkout, 'YYYY-MM-DD');
-                            const days = checkoutdate.diff(checkindate, 'days');
-                            const totalPrice = (packageData.price * days);
-
-
-                            const booking = new Booking({
-                                package_id: dateData.package_id,
-                                package_name: packageData.name,
-                                user_id: userData._id,
-                                user_name: userData.name,
-                                date_id: dateData._id,
-                                price: totalPrice,
-                                checkin: checkinData,
-                                checkout: checkoutData,
-                                days: days,
-                                guests: guests
+                            const date = new Dates({
+                                checkin: req.body.checkin,
+                                checkout: req.body.checkout,
+                                package_id: req.body.packageid,
+                                user_id: userData._id
                             })
+                            const dateData = await date.save();
+                            if (dateData) {
 
-                            const bookingData = await booking.save();
+                                const checkIn = moment(dateData.checkin);
+                                const checkOut = moment(dateData.checkout);
+                                const checkinData = checkIn.format('MMMM DD YYYY');
+                                const checkoutData = checkOut.format('MMMM DD YYYY');
 
-                            res.redirect('/bookingscart')
-                        }
-                        else {
-                            console.log(error.message);
+                                const checkout = dateData.checkout;
+                                const checkin = dateData.checkin;
+                                const checkindate = moment(checkin, 'YYYY-MM-DD');
+                                const checkoutdate = moment(checkout, 'YYYY-MM-DD');
+                                const days = checkoutdate.diff(checkindate, 'days');
+                                const totalPrice = (packageData.price * days);
+
+
+                                const booking = new Booking({
+                                    package_id: dateData.package_id,
+                                    package_name: packageData.name,
+                                    user_id: userData._id,
+                                    user_name: userData.name,
+                                    date_id: dateData._id,
+                                    price: totalPrice,
+                                    checkin: checkinData,
+                                    checkout: checkoutData,
+                                    days: days,
+                                    guests: guests
+                                })
+
+                                const bookingData = await booking.save();
+
+                                res.redirect('/bookingscart')
+                            }
+                            else {
+                                console.log(error.message);
+                            }
                         }
                     }
-                }
-            } else {
+                } else {
 
 
-                const date = new Dates({
-                    checkin: req.body.checkin,
-                    checkout: req.body.checkout,
-                    package_id: req.body.packageid,
-                    user_id: userData._id
-                })
-                const dateData = await date.save();
-
-
-
-                if (dateData) {
-
-                    const checkIn = moment(dateData.checkin);
-                    const checkOut = moment(dateData.checkout);
-                    const checkinData = checkIn.format('MMMM DD YYYY');
-                    const checkoutData = checkOut.format('MMMM DD YYYY');
-
-
-                    const checkout = await dateData.checkout;
-                    const checkin = await dateData.checkin;
-                    const checkindate = moment(checkin, 'YYYY-MM-DD');
-                    const checkoutdate = moment(checkout, 'YYYY-MM-DD');
-                    const days = checkoutdate.diff(checkindate, 'days');
-                    const totalPrice = (packageData.price * days);
-
-                    const booking = new Booking({
-                        package_id: dateData.package_id,
-                        package_name: packageData.name,
-                        user_id: userData._id,
-                        user_name: userData.name,
-                        date_id: dateData._id,
-                        price: totalPrice,
-                        checkin: checkinData,
-                        checkout: checkoutData,
-                        days: days,
-                        guests: guests
+                    const date = new Dates({
+                        checkin: req.body.checkin,
+                        checkout: req.body.checkout,
+                        package_id: req.body.packageid,
+                        user_id: userData._id
                     })
+                    const dateData = await date.save();
 
-                    const bookingData = await booking.save();
 
-                    res.redirect('/bookingsCart');
-                }
-                else {
-                    console.log(error.message);
+
+                    if (dateData) {
+
+                        const checkIn = moment(dateData.checkin);
+                        const checkOut = moment(dateData.checkout);
+                        const checkinData = checkIn.format('MMMM DD YYYY');
+                        const checkoutData = checkOut.format('MMMM DD YYYY');
+
+
+                        const checkout = await dateData.checkout;
+                        const checkin = await dateData.checkin;
+                        const checkindate = moment(checkin, 'YYYY-MM-DD');
+                        const checkoutdate = moment(checkout, 'YYYY-MM-DD');
+                        const days = checkoutdate.diff(checkindate, 'days');
+                        const totalPrice = (packageData.price * days);
+
+                        const booking = new Booking({
+                            package_id: dateData.package_id,
+                            package_name: packageData.name,
+                            user_id: userData._id,
+                            user_name: userData.name,
+                            date_id: dateData._id,
+                            price: totalPrice,
+                            checkin: checkinData,
+                            checkout: checkoutData,
+                            days: days,
+                            guests: guests
+                        })
+
+                        const bookingData = await booking.save();
+
+                        res.redirect('/bookingsCart');
+                    }
+                    else {
+                        console.log(error.message);
+                    }
                 }
             }
+        } else {
+            res.render('packageView', { message: "Booking closed for these dates..", package: packageData })
         }
-    }else{
-        res.render('packageView', { message: "Booking closed for these dates..", package: packageData })
-    }
 
 
 
