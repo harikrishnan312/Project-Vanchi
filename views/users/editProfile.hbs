@@ -125,7 +125,7 @@
                                     </li>
                                     <li><a href="/bookingscart" class="nav-link text-left">Bookings Cart</a></li>
                                     <li>
-                                        <a href="//wa.me/919645969312" class="nav-link text-left">Contact us</a>
+                                        <a href="//wa.me/919645969312" class="nav-link text-left" target="_blank">Contact us</a>
                                     </li>
                                     <li>
                                         <a href="/profile" class="nav-link text-left">Profile</a>
@@ -168,45 +168,49 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="" method="post">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Full Name</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="name"
+                                                value="{{userData.name}}" required>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" name="name" value="{{userData.name}}" required>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Email</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="email" class="form-control" name="email"
+                                                value="{{userData.email}}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Mobile</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="string" class="form-control" name="mobile"
+                                                value="{{userData.mobile}}" required>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="email" class="form-control" name="email" value="{{userData.email}}" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Mobile</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="string" class="form-control" name="mobile" value="{{userData.mobile}}" required>
-                                    </div>
-                                </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Address</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Address</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="address"
+                                                value="{{userData.address}}" required>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" name="address" value="{{userData.address}}" required>
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3"></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-primary px-4" value="Save Changes">
-                                    </div>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -221,8 +225,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-7 text-center">
                         <h2 class="text-white">Get In Touch With Us</h2>
-                        <p class="lead text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p class="mb-0"><a href="#" class="btn btn-warning py-3 px-5 text-white">Contact Us</a></p>
+            <p class="mb-0"><a href="//wa.me/919645969312" class="btn btn-warning py-3 px-5 text-white" target="_blank">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -245,16 +248,13 @@
                             <li><a href="#">News</a></li>
                             <li><a href="#">Services</a></li>
                             <li><a href="#">Our Team</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Projects</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3">
                         <h3 class="footer-heading"><span>Our Services</span></h3>
                         <ul class="list-unstyled">
-                            <li><a href="#">Industrial</a></li>
-                            <li><a href="#">Construction</a></li>
-                            <li><a href="#">Remodeling</a></li>
+                            <li><a href="#">House boats</a></li>
+                            <li><a href="#">Restaurant</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3">
