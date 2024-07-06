@@ -1,0 +1,7 @@
+[build]
+  publish = "public"  # Update this to your static files directory
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
