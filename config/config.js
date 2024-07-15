@@ -15,7 +15,8 @@ const Db =  () =>{
     const mongoose = require('mongoose');
     
     mongoose.set('strictQuery', false);
-    mongoose.connect("mongodb://127.0.0.1:27017/"+"Vanchi_project");
+    // mongoose.connect("mongodb://127.0.0.1:27017/"+"Vanchi_project");
+    mongoose.connect('mongodb+srv://harikrishnanks9645969312:U5vnWZAqZaB7av6k@cluster0.djlblmo.mongodb.net/project_vanchi?retryWrites=true&w=majority');
     
 }
 const securePassword = async (password) => {
